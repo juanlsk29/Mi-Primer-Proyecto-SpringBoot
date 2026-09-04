@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CineReview</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="topbar">
+    <h1>🎬 CineReview</h1>
+    <div class="user-box">
+        <span>Hola, <strong th:text="${username}">usuario</strong></span>
+        <form class="logout-form" th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Cerrar sesión</button>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="new-review-card">
+        <h2>Nueva opinión</h2>
+        <form th:action="@{/reviews}" th:object="${review}" method="post">
+
+            <div class="error-msg" th:if="${#fields.hasErrors('movieTitle')}" th:errors="*{movieTitle}"></div>
+            <div class="field">
+                <label for="movieTitle">Película</label>
+                <input type="text" id="movieTitle" th:field="*{movieTitle}" placeholder="Ej: Interstellar" required>
+            </div>
+
+            <div class="field">
+                <label for="rating">Calificación (1 a 5)</label>
+                <select id="rating" th:field="*{rating}">
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★☆</option>
+                    <option value="3">★★★☆☆</option>
+                    <option value="2">★★☆☆☆</option>
+                    <option value="1">★☆☆☆☆</option>
+                </select>
+            </div>
+
+            <div class="error-msg" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+            <div class="field">
+                <label for="comment">Tu opinión</label>
+                <textarea id="comment" th:field="*{comment}" rows="4" placeholder="¿Qué te pareció?" required></textarea>
+            </div>
+
+            <button type="submit" class="btn">Publicar</button>
+        </form>
+    </div>
+
+    <div class="feed">
+        <h2>Opiniones de la comunidad</h2>
+
+        <div class="empty-state" th:if="${#lists.isEmpty(reviews)}">
+            Aún no hay opiniones. ¡Sé el primero en publicar!
+        </div>
+
+        <div class="review-card" th:each="r : ${reviews}">
+            <div class="movie-title" th:text="${r.movieTitle}">Título</div>
+            <div class="meta">
+                por <strong th:text="${r.user.username}">usuario</strong> ·
+                <span th:text="${#temporals.format(r.createdAt, 'dd/MM/yyyy HH:mm')}">fecha</span>
+            </div>
+            <div class="stars" th:text="${'★'.repeat(r.rating) + '☆'.repeat(5 - r.rating)}">★★★★★</div>
+            <p class="comment" th:text="${r.comment}">Comentario</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
