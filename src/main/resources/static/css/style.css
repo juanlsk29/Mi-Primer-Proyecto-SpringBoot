@@ -42,7 +42,7 @@ a { color: inherit; }
   margin: 6px 0 0;
   font-size: 1.6rem;
   letter-spacing: 1px;
-  background: linear-gradient(90deg, #ffd76e, #000000);
+  background: linear-gradient(90deg, #6ee7ff, #4f7dff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -68,7 +68,7 @@ a { color: inherit; }
 
 .field input:focus, .field textarea:focus {
   outline: none;
-  border-color: #000000;
+  border-color: #4f7dff;
 }
 
 .btn {
@@ -77,8 +77,8 @@ a { color: inherit; }
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(90deg, #000000, #ffb26e);
-  color: #24102b;
+  background: linear-gradient(90deg, #4f7dff, #6ee7ff);
+  color: #0b1533;
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
@@ -94,13 +94,7 @@ a { color: inherit; }
   color: #f3f0fa;
 }
 
-.switch-link {
-  text-align: center;
-  margin-top: 18px;
-  font-size: 0.88rem;
-  color: #cfc7e6;
-}
-
+.switch-link a { color: #6ee7ff; font-weight: 600; text-decoration: none; }
 .switch-link a { color: #ffb26e; font-weight: 600; text-decoration: none; }
 
 .error-msg {
@@ -137,7 +131,7 @@ a { color: inherit; }
 .topbar h1 {
   margin: 0;
   font-size: 1.4rem;
-  background: linear-gradient(90deg, #ffd76e, #000000);
+  background: linear-gradient(90deg, #6ee7ff, #4f7dff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -184,7 +178,7 @@ a { color: inherit; }
 .new-review-card h2, .feed h2 {
   margin-top: 0;
   font-size: 1.1rem;
-  color: #ffd76e;
+  color: #6ee7ff;
 }
 
 .feed { display: flex; flex-direction: column; gap: 16px; }
@@ -201,7 +195,7 @@ a { color: inherit; }
   margin-bottom: 10px;
 }
 
-.stars { color: #ffd76e; letter-spacing: 2px; }
+.stars { color: #6ee7ff; letter-spacing: 2px; }
 
 .review-card p.comment { margin: 0; line-height: 1.45; color: #f0ecfb; }
 
