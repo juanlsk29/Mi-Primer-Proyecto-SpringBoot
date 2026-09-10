@@ -1,6 +1,6 @@
-package com.cinereview.cinereview.repository;
+package com.CineReview.CineReview.repository;
 
-import com.cinereview.cinereview.model.User;
+import com.CineReview.CineReview.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

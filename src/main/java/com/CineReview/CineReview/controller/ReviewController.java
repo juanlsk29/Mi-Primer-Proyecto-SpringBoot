@@ -1,9 +1,7 @@
-package com.cinereview.cinereview.controller;
+package com.CineReview.CineReview.controller;
 
-import com.cinereview.cinereview.model.Review;
-import com.cinereview.cinereview.model.User;
-import com.cinereview.cinereview.repository.ReviewRepository;
-import com.cinereview.cinereview.repository.UserRepository;
+import com.CineReview.CineReview.model.Review;
+import com.CineReview.CineReview.service.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,17 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ReviewController {
 
-    private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
+    private final ReviewService reviewService;
 
-    public ReviewController(ReviewRepository reviewRepository, UserRepository userRepository) {
-        this.reviewRepository = reviewRepository;
-        this.userRepository = userRepository;
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
     }
 
     @GetMapping("/")
     public String home(Model model, Authentication authentication) {
-        model.addAttribute("reviews", reviewRepository.findAllByOrderByCreatedAtDesc());
+        model.addAttribute("reviews", reviewService.obtenerTodas());
         model.addAttribute("review", new Review());
         model.addAttribute("username", authentication.getName());
         return "home";
@@ -39,16 +35,14 @@ public class ReviewController {
                                 Authentication authentication) {
 
         if (result.hasErrors()) {
-            model.addAttribute("reviews", reviewRepository.findAllByOrderByCreatedAtDesc());
+            model.addAttribute("reviews", reviewService.obtenerTodas());
             model.addAttribute("username", authentication.getName());
             return "home";
         }
 
-        User currentUser = userRepository.findByUsername(authentication.getName())
-                .orElseThrow(() -> new IllegalStateException("Usuario autenticado no encontrado"));
-
-        review.setUser(currentUser);
-        reviewRepository.save(review);
+        // El controlador ya no busca al usuario ni arma la relación:
+        // se lo delega a ReviewService.
+        reviewService.publicarReview(review, authentication.getName());
 
         return "redirect:/";
     }

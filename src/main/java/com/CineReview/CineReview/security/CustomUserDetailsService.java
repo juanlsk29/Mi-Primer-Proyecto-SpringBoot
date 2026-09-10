@@ -1,7 +1,7 @@
-package com.cinereview.cinereview.security;
+package com.CineReview.CineReview.security;
 
-import com.cinereview.cinereview.model.User;
-import com.cinereview.cinereview.repository.UserRepository;
+import com.CineReview.CineReview.model.User;
+import com.CineReview.CineReview.repository.UserRepository;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

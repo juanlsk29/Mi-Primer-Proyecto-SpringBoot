@@ -1,9 +1,8 @@
-package com.cinereview.cinereview.controller;
+package com.CineReview.CineReview.controller;
 
-import com.cinereview.cinereview.model.User;
-import com.cinereview.cinereview.repository.UserRepository;
+import com.CineReview.CineReview.model.User;
+import com.CineReview.CineReview.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AuthController {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/login")
@@ -37,20 +34,13 @@ public class AuthController {
     public String register(@Valid @ModelAttribute("user") User user,
                             BindingResult result) {
 
-        if (userRepository.existsByUsername(user.getUsername())) {
-            result.rejectValue("username", "error.user", "Ese nombre de usuario ya existe");
-        }
-        if (userRepository.existsByEmail(user.getEmail())) {
-            result.rejectValue("email", "error.user", "Ese correo ya está registrado");
-        }
+        // El controlador ya no valida duplicados ni cifra la contraseña:
+        // toda esa lógica de negocio vive ahora en UserService.
+        boolean exito = userService.registrarUsuario(user, result);
 
-        if (result.hasErrors()) {
+        if (!exito) {
             return "register";
         }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("ROLE_USER");
-        userRepository.save(user);
 
         return "redirect:/login?registered";
     }

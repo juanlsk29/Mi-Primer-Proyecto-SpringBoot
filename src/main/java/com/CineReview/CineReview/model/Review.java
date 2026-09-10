@@ -1,4 +1,4 @@
-package com.cinereview.cinereview.model;
+package com.CineReview.CineReview.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
